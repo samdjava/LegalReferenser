@@ -1,0 +1,14 @@
+.idea
+*.log*
+*.iml
+*.patch
+*.iws
+*.ipr
+*.ids
+*jar
+*.txt
+lib
+classes
+target
+out
+.class
