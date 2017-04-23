@@ -3,6 +3,7 @@ package com.nyaaya.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nyaaya.model.TrafficRulesResponse;
+import org.apache.commons.lang.StringUtils;
 import org.codehaus.jettison.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -27,30 +28,38 @@ public class AdminServicesImpl implements AdminServices{
         JSONObject json;
         TrafficRulesResponse trafficRulesResponse;
         try {
-            URL url = new URL(urlEndpoint);
-            URLConnection connection = url.openConnection();
-            try {
-                String line;
-                StringBuilder builder = new StringBuilder();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                while((line = reader.readLine()) != null) {
-                    builder.append(line);
-                }
-                ObjectMapper objectMapper = new ObjectMapper();
-                trafficRulesResponse = objectMapper.readValue(builder.toString(), TrafficRulesResponse.class);
-
-            } catch (Exception ex) {
-                 ex.printStackTrace();
-            }
+            readDataFromUrl(urlEndpoint);
         }
         catch (Exception ex) {
             ex.printStackTrace();
         }
     }
 
-    public void trainTrafficDataSet(){
+    private void readDataFromUrl(String urlString) throws Exception{
+        TrafficRulesResponse trafficRulesResponse;
+        URL url = new URL(urlString);
+        URLConnection connection = url.openConnection();
+        try {
+            String line;
+            StringBuilder builder = new StringBuilder();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            while((line = reader.readLine()) != null) {
+                builder.append(line);
+            }
+            ObjectMapper objectMapper = new ObjectMapper();
+            trafficRulesResponse = objectMapper.readValue(builder.toString(), TrafficRulesResponse.class);
+            pushData(trafficRulesResponse);
+            if(StringUtils.isNotEmpty(trafficRulesResponse.getNext())){
+                readDataFromUrl(trafficRulesResponse.getNext());
+            }
 
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 
+    private void pushData(TrafficRulesResponse trafficRulesResponse) {
 
     }
+
 }
