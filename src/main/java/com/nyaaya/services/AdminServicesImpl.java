@@ -2,6 +2,7 @@ package com.nyaaya.services;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nyaaya.Constants;
 import com.nyaaya.model.TrafficRulesResponse;
 import org.apache.commons.lang.StringUtils;
 import org.codehaus.jettison.json.JSONObject;
@@ -18,7 +19,6 @@ import java.net.URLConnection;
 public class AdminServicesImpl implements AdminServices{
 
     private static final String ELASTIC_SEARCH_END_POINT = "";
-    private static final String urlEndpoint = "http://nyaaya.in/api/e1/traffic-challan/?city=1";
 
     public String ping(){
         return "Admin services are up";
@@ -28,7 +28,7 @@ public class AdminServicesImpl implements AdminServices{
         JSONObject json;
         TrafficRulesResponse trafficRulesResponse;
         try {
-            readDataFromUrl(urlEndpoint);
+            readDataFromUrl(Constants.urlEndpoint_NYAYA_TRAFFIC);
         }
         catch (Exception ex) {
             ex.printStackTrace();
@@ -59,6 +59,8 @@ public class AdminServicesImpl implements AdminServices{
     }
 
     private void pushData(TrafficRulesResponse trafficRulesResponse) {
+
+
 
     }
 
