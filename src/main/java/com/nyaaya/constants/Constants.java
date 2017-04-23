@@ -1,4 +1,4 @@
-package com.nyaaya;
+package com.nyaaya.constants;
 
 /**
  * Created by root on 23/4/17.

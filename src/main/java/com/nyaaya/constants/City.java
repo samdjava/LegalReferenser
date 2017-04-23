@@ -1,4 +1,4 @@
-package com.nyaaya.services;
+package com.nyaaya.constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,5 +25,7 @@ public enum City {
         return cities;
     }
 
-
+    public Integer getId() {
+        return id;
+    }
 }
